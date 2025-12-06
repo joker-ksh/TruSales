@@ -7,7 +7,7 @@ function App() {
 
   return (
     <div
-          className="flex items-start justify-between relative overflow-x-hidden w-full min-w-[1456px] min-h-[955px]"
+          className="flex items-start relative overflow-x-hidden w-full min-w-[1456px] min-h-[955px]"
           data-model-id="1:564"
         >
           <Sidebar />

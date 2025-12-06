@@ -188,7 +188,7 @@ export const Frame = () => {
     <div className="flex flex-col w-full max-w-[1236px] mx-auto bg-white min-h-screen">
       {/* Header */}
       <header className="px-[18px] py-3 bg-white border-b border-gray-200 flex items-center justify-between">
-        <h1 className="text-3xl font-semibold text-black">
+        <h1 className="text-2xl font-semibold text-black">
           Sales Management System
         </h1>
         <div className="w-[400px]">
@@ -239,18 +239,44 @@ export const Frame = () => {
       </section>
 
       {/* Stats Section */}
-      <section className="flex items-center gap-8 px-6 py-4 bg-white border-y border-gray-200">
-        <div className="flex flex-col gap-2 flex-1">
-          <span className="text-base text-gray-600">Total units sold</span>
-          <span className="text-3xl font-semibold text-black">12,000</span>
+      <section className="flex items-center gap-6 px-5 py-3 bg-white border-y border-gray-200">
+        <div className="flex flex-col gap-1 px-4 py-2 border border-gray-200 rounded">
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-gray-600">Total units sold</span>
+            <button className="w-3.5 h-3.5 flex items-center justify-center">
+              <svg className="w-3.5 h-3.5 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 16v-4M12 8h.01"/>
+              </svg>
+            </button>
+          </div>
+          <span className="text-sm font-semibold text-black">10</span>
         </div>
-        <div className="flex flex-col gap-2 flex-1">
-          <span className="text-base text-gray-600">Total amount</span>
-          <span className="text-3xl font-semibold text-black">₹ 12,00,000</span>
+        
+        <div className="flex flex-col gap-1 px-4 py-2 border border-gray-200 rounded">
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-gray-600">Total Amount</span>
+            <button className="w-3.5 h-3.5 flex items-center justify-center">
+              <svg className="w-3.5 h-3.5 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 16v-4M12 8h.01"/>
+              </svg>
+            </button>
+          </div>
+          <span className="text-sm font-semibold text-black">₹89,000 (19 SRs)</span>
         </div>
-        <div className="flex flex-col gap-2 flex-1">
-          <span className="text-base text-gray-600">Total discount</span>
-          <span className="text-3xl font-semibold text-black">₹ 50,000</span>
+        
+        <div className="flex flex-col gap-1 px-4 py-2 border border-gray-200 rounded">
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-gray-600">Total Discount</span>
+            <button className="w-3.5 h-3.5 flex items-center justify-center">
+              <svg className="w-3.5 h-3.5 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 16v-4M12 8h.01"/>
+              </svg>
+            </button>
+          </div>
+          <span className="text-sm font-semibold text-black">₹15000 (45 SRs)</span>
         </div>
       </section>
 

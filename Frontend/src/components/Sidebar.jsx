@@ -10,7 +10,7 @@ export const Sidebar = () => {
       <div className="flex flex-col items-start gap-2.5 px-4 py-3 border-b border-gray-200">
         <button className="flex items-center justify-between px-3 py-2 w-full bg-white rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors">
           <div className="flex items-center gap-2 ">
-            <div className="w-8 h-8 flex items-center justify-center bg-purple-600 rounded-lg">
+            <div className="w-8 h-8 flex items-center justify-center bg-blue-600 rounded-lg">
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                 <path d="M10 2L3 7V13L10 18L17 13V7L10 2Z" fill="white"/>
               </svg>

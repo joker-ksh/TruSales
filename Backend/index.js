@@ -13,8 +13,7 @@ const app = express();
 app.use(express.json());
 const frontend_url = process.env.FRONT_END_ORIGIN;
 app.use(cors({
-  origin: 'http://localhost:5173',
-  origin: frontend_url,
+  origin: 'https://tru-sales.vercel.app/',
 }));
 connectDb();
 

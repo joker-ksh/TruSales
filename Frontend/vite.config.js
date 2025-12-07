@@ -8,4 +8,9 @@ export default defineConfig({
     react(),
     tailwindcss()
   ],
+  server: {
+    allowedHosts: [
+      "ayla-overattentive-disposedly.ngrok-free.dev"
+    ]
+  }
 })

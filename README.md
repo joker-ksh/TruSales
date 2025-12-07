@@ -7,6 +7,7 @@
 **[View Live Application →](https://tru-sales.vercel.app/)**
 
 ---
+Note : The loading may take little extra time as the server deployed on free tier of render.
 
 ## 1. Table of Contents
 

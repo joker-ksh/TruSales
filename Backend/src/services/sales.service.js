@@ -28,9 +28,17 @@ exports.getSales = async (queryParams) => {
     if (isNumeric) {
       match["Phone Number"] = { $regex: "^" + search, $options: "i" };
     } else {
-      match.$text = { $search: search };
+      const clean = search.trim().replace(/\s+/g, " ");
+      const pattern = "^" + clean.split(" ").join(".*");
+
+      match["Customer Name"] = {
+        $regex: pattern,
+        $options: "i"
+      };
     }
   }
+
+
 
   // -------------------------
   // FILTERS

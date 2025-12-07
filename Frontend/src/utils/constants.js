@@ -18,6 +18,8 @@ export const SORT_OPTIONS = [
   { value: 'date-old', label: 'Date (Oldest First)' }
 ];
 
+export const API_BASE_URL = 'http://localhost:3000/api';
+
 export const TABLE_HEADERS = [
   'Transaction ID',
   'Date',

@@ -10,15 +10,19 @@ const API_BASE_URL = 'http://localhost:3000/api';
  * @param {string} params.sort - Sort field
  * @returns {Promise<Object>} Response with success, count, and data
  */
-export const fetchSalesData = async ({ search = '', page = 1, sort = 'date' }) => {
+export const fetchSalesData = async ({ search = '', page = null, sort = null }) => {
   try {
     const params = new URLSearchParams();
     
+    // Only add parameters if they have values
     if (search) params.append('search', search);
-    params.append('page', page.toString());
+    if (page && page > 1) params.append('page', page.toString());
     if (sort) params.append('sort', sort);
     
-    const url = `${API_BASE_URL}/sales?${params.toString()}`;
+    const queryString = params.toString();
+    const url = queryString 
+      ? `${API_BASE_URL}/sales?${queryString}`
+      : `${API_BASE_URL}/sales`;
     
     const response = await fetch(url);
     

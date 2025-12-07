@@ -15,7 +15,7 @@ export const FilterBar = ({
   setActiveDropdown 
 }) => {
   return (
-    <section className="px-5 py-4 bg-white flex items-center justify-between">
+    <section className="px-5 py-4 bg-white/80 backdrop-blur-md flex items-center justify-between">
       <div className="inline-flex items-center gap-2.5">
         <button 
           onClick={resetFilters}

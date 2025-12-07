@@ -17,7 +17,7 @@ export const Sidebar = () => {
             </div>
             <div className="flex flex-col items-start">
               <span className="text-sm font-semibold text-gray-900">Vault</span>
-              <span className="text-xs text-gray-600">Anurag Yadav</span>
+              <span className="text-xs text-gray-600">Aman</span>
             </div>
           </div>
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-gray-400">

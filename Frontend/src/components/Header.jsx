@@ -1,16 +1,23 @@
 import React, { useRef } from "react";
 
 export const Header = ({ setSearchQuery }) => {
-  const timerRef = useRef(null);
+  const timerRef = useRef(null); //Think of useRef as a small box that React does NOT reset on every re-render.
+  //A normal variable(useState to be precise) inside the component resets every time the component re-renders.
+  //Perfect to store 
+  // timers (setTimeout IDs)
+  // DOM references
+  // previous values
 
-  const handleChange = (e) => {
-    const value = e.target.value;
+  const handleChange = (e) => { //function changes on every key stroke (onchange event)
+    const value = e.target.value;//get the value of the search bar
 
-    // reset previous timer
+    // reset previous timer -> It will keep reseting the previous timers if changes done
     if (timerRef.current) {
       clearTimeout(timerRef.current);
     }
 
+    //finally when the user stops writing in search bar
+    //after this delay the search query will get set and the api call would be made.
     // set new debounce timer
     timerRef.current = setTimeout(() => {
       setSearchQuery(value);

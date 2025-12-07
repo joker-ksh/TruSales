@@ -7,7 +7,6 @@ import { StatsSection } from './StatsSection';
 import { TransactionTable } from './TransactionTable';
 import { Pagination } from './Pagination';
 import { useFilters } from '../hooks/useFilters';
-import { filterTransactions, sortTransactions } from '../utils/filterUtils';
 import { fetchSalesData, transformApiData } from '../services/api';
 
 export const Frame = () => {

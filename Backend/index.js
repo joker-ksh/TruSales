@@ -13,7 +13,7 @@ const app = express();
 app.use(express.json());
 const frontend_url = process.env.FRONT_END_ORIGIN;
 app.use(cors({
-  origin: 'https://tru-sales.vercel.app/',
+  origin: 'https://tru-sales.vercel.app',
 }));
 connectDb();
 

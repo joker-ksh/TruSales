@@ -6,15 +6,15 @@
 
 ## 1. Table of Contents
 
-- [Overview](#overview)
-- [Tech Stack](#tech-stack)
-- [Key Features](#key-features)
-  - [Search Implementation](#search-implementation)
-  - [Filter Implementation](#filter-implementation)
-  - [Sorting Implementation](#sorting-implementation)
-  - [Pagination Implementation](#pagination-implementation)
-- [Setup Instructions](#setup-instructions)
-- [API Endpoints](#api-endpoints)
+- [Overview](#2-overview)
+- [Tech Stack](#3-tech-stack)
+- [Key Features](#4-key-features)
+  - [Search Implementation](#41-search-implementation)
+  - [Filter Implementation](#42-filter-implementation)
+  - [Sorting Implementation](#43-sorting-implementation)
+  - [Pagination Implementation](#44-pagination-implementation)
+- [Setup Instructions](#5-setup-instructions)
+- [API Endpoints](#6-api-endpoints)
 
 ---
 
@@ -73,7 +73,7 @@ Multi-select and range-based filtering system:
   - Customer Region
   - Gender
   - Age Range
-  - Product Category    
+  - Product Category
   - Payment Method
 
 - **Key Characteristics:**

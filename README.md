@@ -2,6 +2,10 @@
 
 > **A comprehensive Retail Sales Management System with advanced search, filtering, and data visualization capabilities**
 
+## 🚀 Live Demo
+
+**[View Live Application →](https://tru-sales.vercel.app/)**
+
 ---
 
 ## 1. Table of Contents

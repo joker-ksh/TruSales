@@ -12,10 +12,10 @@ export const FILTER_OPTIONS = {
 export const SORT_OPTIONS = [
   { value: 'name-asc', label: 'Customer Name (A-Z)' },
   { value: 'name-desc', label: 'Customer Name (Z-A)' },
-  { value: 'amount-high', label: 'Amount (High to Low)' },
-  { value: 'amount-low', label: 'Amount (Low to High)' },
-  { value: 'date-new', label: 'Date (Newest First)' },
-  { value: 'date-old', label: 'Date (Oldest First)' }
+  { value: 'date-asc', label: 'Date (Oldest First)' },
+  { value: 'date-desc', label: 'Date (Newest First)' },
+  { value: 'quantity-asc', label: 'Quantity (Low to High)' },
+  { value: 'quantity-desc', label: 'Quantity (High to Low)' }
 ];
 
 export const API_BASE_URL = 'http://localhost:3000/api';

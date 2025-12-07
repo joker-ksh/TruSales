@@ -1,19 +1,33 @@
-// src/components/Header.jsx
+import React, { useRef } from "react";
 
-import React from 'react';
+export const Header = ({ setSearchQuery }) => {
+  const timerRef = useRef(null);
 
-export const Header = ({ searchQuery, setSearchQuery }) => {
+  const handleChange = (e) => {
+    const value = e.target.value;
+
+    // reset previous timer
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+
+    // set new debounce timer
+    timerRef.current = setTimeout(() => {
+      setSearchQuery(value);
+    }, 500); // debounce delay
+  };
+
   return (
     <header className="px-[18px] py-3 bg-white border-b border-gray-200 flex items-center justify-between">
       <h1 className="text-2xl font-semibold text-black">
         Sales Management System
       </h1>
+
       <div className="w-[400px]">
         <input
           type="text"
           placeholder="Name, Phone no."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          onChange={handleChange}
           className="w-full px-3 py-2 bg-white rounded-md border border-gray-300 focus:outline-none focus:border-gray-400 transition-colors text-sm text-gray-500 placeholder-gray-400"
         />
       </div>

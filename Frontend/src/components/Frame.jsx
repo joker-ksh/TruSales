@@ -24,29 +24,29 @@ export const Frame = () => {
   
   const { filters, setters, resetFilters } = useFilters();
 
-  // Fetch data from API whenever search or page changes
+  // Fetch data from API whenever search, page, or filters change
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
       setError(null);
       
       try {
-        // Map sortBy to API sort parameter
-        const sortMap = {
-          'name-asc': 'name',
-          'name-desc': '-name',
-          'date-new': '-date',
-          'date-old': 'date',
-          'amount-high': '-amount',
-          'amount-low': 'amount'
-        };
+        // Parse sortBy into sort field and order
+        let sortField = null;
+        let sortOrder = null;
         
-        const apiSort = sortBy ? sortMap[sortBy] : null;
+        if (sortBy) {
+          const [field, order] = sortBy.split('-');
+          sortField = field; // 'name', 'date', or 'quantity'
+          sortOrder = order; // 'asc' or 'desc'
+        }
         
         const response = await fetchSalesData({
           search: searchQuery,
           page: currentPage,
-          sort: apiSort
+          sort: sortField,
+          order: sortOrder,
+          filters: filters
         });
         
         if (response.success) {
@@ -63,22 +63,18 @@ export const Frame = () => {
     };
 
     fetchData();
-  }, [searchQuery, currentPage, sortBy]);
+  }, [searchQuery, currentPage, sortBy, filters.region, filters.gender, filters.ageRange, filters.category, filters.payment, filters.dateRange]);
 
-  // Apply client-side filters to API data
-  const filteredAndSortedTransactions = useMemo(() => {
-    const filtered = filterTransactions(apiData, filters, '');
-    // Only sort client-side if sortBy is set and we have data
-    if (sortBy && filtered.length > 0) {
-      return sortTransactions(filtered, sortBy);
-    }
-    return filtered;
-  }, [apiData, filters, sortBy]);
+  // No client-side filtering - backend handles everything
+  const displayedTransactions = useMemo(() => {
+    return apiData;
+  }, [apiData]);
 
   const handleResetFilters = () => {
     resetFilters();
     setSearchQuery('');
     setCurrentPage(1);
+    setSortBy(''); // Reset sort too
   };
 
   const handlePageChange = (page) => {
@@ -105,7 +101,7 @@ export const Frame = () => {
         setActiveDropdown={setActiveDropdown}
       />
 
-      <StatsSection transactions={filteredAndSortedTransactions} />
+      <StatsSection transactions={displayedTransactions} />
 
       {/* Loading State */}
       {isLoading && (
@@ -135,7 +131,7 @@ export const Frame = () => {
 
       {/* Table */}
       {!isLoading && !error && (
-        <TransactionTable transactions={filteredAndSortedTransactions} />
+        <TransactionTable transactions={displayedTransactions} />
       )}
 
       <Pagination 

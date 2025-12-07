@@ -7,10 +7,18 @@ const API_BASE_URL = 'http://localhost:3000/api';
  * @param {Object} params - Query parameters
  * @param {string} params.search - Search query
  * @param {number} params.page - Page number (1-based)
- * @param {string} params.sort - Sort field
+ * @param {string} params.sort - Sort field (name, date, quantity)
+ * @param {string} params.order - Sort order (asc, desc)
+ * @param {Object} params.filters - Filter object
  * @returns {Promise<Object>} Response with success, count, and data
  */
-export const fetchSalesData = async ({ search = '', page = null, sort = null }) => {
+export const fetchSalesData = async ({ 
+  search = '', 
+  page = null, 
+  sort = null,
+  order = null,
+  filters = {}
+}) => {
   try {
     const params = new URLSearchParams();
     
@@ -18,6 +26,22 @@ export const fetchSalesData = async ({ search = '', page = null, sort = null }) 
     if (search) params.append('search', search);
     if (page && page > 1) params.append('page', page.toString());
     if (sort) params.append('sort', sort);
+    if (order) params.append('order', order);
+    
+    // Add filter parameters
+    if (filters.region && filters.region !== 'All') {
+      params.append('region', filters.region);
+    }
+    if (filters.gender && filters.gender !== 'All') {
+      params.append('gender', filters.gender);
+    }
+    if (filters.category && filters.category !== 'All') {
+      params.append('category', filters.category);
+    }
+    if (filters.payment && filters.payment !== 'All') {
+      params.append('payment', filters.payment);
+    }
+    // Note: ageRange and dateRange might need special handling based on your backend
     
     const queryString = params.toString();
     const url = queryString 

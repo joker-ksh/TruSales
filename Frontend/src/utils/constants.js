@@ -6,7 +6,7 @@ export const FILTER_OPTIONS = {
   ageRange: ['All', '18-25', '26-35', '36-45', '46+'],
   category: ['All', 'Clothing', 'Electronics', 'Beauty'],
   payment: ['All', 'Credit Card', 'Debit Card', 'Cash', 'UPI', 'Net Banking'],
-  dateRange: ['All', 'Last 7 days', 'Last 30 days', 'Last 90 days']
+  dateRange: ['All']
 };
 
 export const SORT_OPTIONS = [

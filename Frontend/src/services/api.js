@@ -20,40 +20,60 @@ export const fetchSalesData = async ({
   filters = {}
 }) => {
   try {
-    const params = new URLSearchParams();
+    // Build URL manually to avoid URLSearchParams encoding issues
+    const queryParts = [];
     
     // Only add parameters if they have values
-    if (search) params.append('search', search);
-    if (page && page > 1) params.append('page', page.toString());
-    if (sort) params.append('sort', sort);
-    if (order) params.append('order', order);
+    if (search && search.trim()) {
+      queryParts.push(`search=${encodeURIComponent(search)}`);
+    }
+    
+    if (page && page > 1) {
+      queryParts.push(`page=${page}`);
+    }
+    
+    if (sort && sort.trim()) {
+      queryParts.push(`sort=${sort}`);
+    }
+    
+    if (order && order.trim()) {
+      queryParts.push(`order=${order}`);
+    }
     
     // Multi-select filters - send as comma-separated strings
     if (filters.region && Array.isArray(filters.region) && filters.region.length > 0) {
-      params.append('region', filters.region.join(','));
+      queryParts.push(`region=${filters.region.join(',')}`);
     }
+    
     if (filters.gender && Array.isArray(filters.gender) && filters.gender.length > 0) {
-      params.append('gender', filters.gender.join(','));
+      queryParts.push(`gender=${filters.gender.join(',')}`);
     }
+    
     if (filters.category && Array.isArray(filters.category) && filters.category.length > 0) {
-      params.append('category', filters.category.join(','));
+      queryParts.push(`category=${filters.category.join(',')}`);
     }
+    
     if (filters.payment && Array.isArray(filters.payment) && filters.payment.length > 0) {
-      params.append('payment', filters.payment.join(','));
+      // Don't encode spaces in payment methods - backend expects "Credit Card" not "Credit%20Card"
+      queryParts.push(`payment=${filters.payment.join(',')}`);
     }
     
-    // Single-select filters - send as strings
-    if (filters.ageRange && filters.ageRange !== 'All') {
-      params.append('age', filters.ageRange);
-    }
-    if (filters.dateRange && filters.dateRange !== 'All') {
-      params.append('date', filters.dateRange);
+    // Age range filter - send as-is to backend
+    if (filters.ageRange && filters.ageRange !== 'All' && filters.ageRange.trim()) {
+      queryParts.push(`age=${filters.ageRange}`);
     }
     
-    const queryString = params.toString();
+    // Date range filter
+    if (filters.dateRange && filters.dateRange !== 'All' && filters.dateRange.trim()) {
+      queryParts.push(`date=${filters.dateRange}`);
+    }
+    
+    const queryString = queryParts.join('&');
     const url = queryString 
       ? `${API_BASE_URL}/sales?${queryString}`
       : `${API_BASE_URL}/sales`;
+    
+    console.log('Fetching URL:', url);
     
     const response = await fetch(url);
     

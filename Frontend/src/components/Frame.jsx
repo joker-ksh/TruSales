@@ -52,10 +52,20 @@ export const Frame = () => {
           const transformedData = transformApiData(response.data);
           setApiData(transformedData);
           setIsLastPage(response.isLastPage);
+          
+          // If we get no data and we're not on page 1, we've gone too far
+          if (transformedData.length === 0 && currentPage > 1) {
+            setIsLastPage(true);
+          }
         }
       } catch (err) {
         setError(err.message);
         setApiData([]);
+        
+        // If error on a high page number, mark as last page
+        if (currentPage > 1) {
+          setIsLastPage(true);
+        }
       } finally {
         setIsLoading(false);
       }
@@ -130,13 +140,29 @@ export const Frame = () => {
               onClick={() => setCurrentPage(1)}
               className="mt-4 px-4 py-2 bg-gray-900 text-white rounded hover:bg-gray-800 transition-colors"
             >
-              Retry
+              Go to Page 1
             </button>
           </div>
         </div>
       )}
 
-      {!isLoading && !error && (
+      {!isLoading && !error && displayedTransactions.length === 0 && (
+        <div className="flex-1 flex items-center justify-center py-12 bg-gray-50">
+          <div className="text-center px-4">
+            <p className="text-gray-600 mb-2">No transactions found</p>
+            {currentPage > 1 && (
+              <button
+                onClick={() => setCurrentPage(1)}
+                className="mt-4 px-4 py-2 bg-gray-900 text-white rounded hover:bg-gray-800 transition-colors"
+              >
+                Go to Page 1
+              </button>
+            )}
+          </div>
+        </div>
+      )}
+
+      {!isLoading && !error && displayedTransactions.length > 0 && (
         <TransactionTable transactions={displayedTransactions} />
       )}
 
@@ -145,6 +171,7 @@ export const Frame = () => {
         onPageChange={handlePageChange}
         isLastPage={isLastPage}
         isLoading={isLoading}
+        hasData={displayedTransactions.length > 0}
       />
     </div>
   );

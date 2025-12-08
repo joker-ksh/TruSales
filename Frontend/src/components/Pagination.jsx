@@ -6,28 +6,26 @@ export const Pagination = ({
   currentPage, 
   onPageChange, 
   isLastPage,
-  isLoading 
+  isLoading,
+  hasData
 }) => {
   const [pageInput, setPageInput] = useState('');
   const [showPageInput, setShowPageInput] = useState(false);
+  const [inputError, setInputError] = useState('');
 
   // Generate visible page numbers (show current and surrounding pages)
   const getVisiblePages = () => {
     const pages = [];
-    const maxVisible = 6;
     
-    // If current page is within first 6 pages, show 1-6
-    if (currentPage <= maxVisible) {
-      for (let i = 1; i <= Math.min(maxVisible, currentPage + 2); i++) {
-        pages.push(i);
-      }
-    } else {
-      // Show current page and surrounding pages
-      const start = currentPage - 2;
-      const end = currentPage + 2;
-      for (let i = start; i <= end; i++) {
-        pages.push(i);
-      }
+    // Always show current page plus 2 before and 2 after (when available)
+    const start = Math.max(1, currentPage - 2);
+    
+    // If we're on the last page, don't show pages beyond current
+    // Otherwise show current + 2
+    const end = isLastPage ? currentPage : currentPage + 2;
+    
+    for (let i = start; i <= end; i++) {
+      pages.push(i);
     }
     
     return pages;
@@ -35,13 +33,32 @@ export const Pagination = ({
 
   const handlePageInputSubmit = (e) => {
     e.preventDefault();
+    setInputError('');
+    
     const pageNum = parseInt(pageInput);
     
-    if (pageNum && pageNum > 0) {
-      onPageChange(pageNum);
+    // Validate input
+    if (!pageNum || pageNum < 1) {
+      setInputError('Please enter a valid page number');
+      return;
+    }
+    
+    // If we're on the last page, don't allow jumping beyond current page
+    if (isLastPage && pageNum > currentPage) {
+      setInputError(`Page ${pageNum} doesn't exist. Page ${currentPage} is the last page.`);
+      return;
+    }
+    
+    // If user is trying to go to the same page
+    if (pageNum === currentPage) {
       setPageInput('');
       setShowPageInput(false);
+      return;
     }
+    
+    onPageChange(pageNum);
+    setPageInput('');
+    setShowPageInput(false);
   };
 
   const handlePrevious = () => {
@@ -63,6 +80,9 @@ export const Pagination = ({
       <div className="flex items-center gap-2 text-sm text-gray-600">
         <span>Page {currentPage}</span>
         {isLastPage && <span className="text-gray-500">(Last page)</span>}
+        {!hasData && currentPage > 1 && (
+          <span className="text-amber-600">(No data on this page)</span>
+        )}
       </div>
       
       <nav className="flex items-center gap-2">
@@ -107,33 +127,46 @@ export const Pagination = ({
             Go to...
           </button>
         ) : (
-          <form onSubmit={handlePageInputSubmit} className="flex items-center gap-2">
-            <input
-              type="number"
-              min="1"
-              value={pageInput}
-              onChange={(e) => setPageInput(e.target.value)}
-              placeholder="Page #"
-              className="w-20 px-2 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:border-gray-500"
-              autoFocus
-            />
-            <button
-              type="submit"
-              className="px-3 py-2 bg-gray-900 text-white rounded text-sm hover:bg-gray-800 transition-colors"
-            >
-              Go
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                setShowPageInput(false);
-                setPageInput('');
-              }}
-              className="px-2 py-2 text-gray-600 hover:text-gray-800 text-sm"
-            >
-              ✕
-            </button>
-          </form>
+          <div className="flex flex-col items-start">
+            <form onSubmit={handlePageInputSubmit} className="flex items-center gap-2">
+              <input
+                type="number"
+                min="1"
+                value={pageInput}
+                onChange={(e) => {
+                  setPageInput(e.target.value);
+                  setInputError('');
+                }}
+                placeholder="Page #"
+                className={`w-20 px-2 py-2 border rounded text-sm focus:outline-none ${
+                  inputError 
+                    ? 'border-red-500 focus:border-red-500' 
+                    : 'border-gray-300 focus:border-gray-500'
+                }`}
+                autoFocus
+              />
+              <button
+                type="submit"
+                className="px-3 py-2 bg-gray-900 text-white rounded text-sm hover:bg-gray-800 transition-colors"
+              >
+                Go
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setShowPageInput(false);
+                  setPageInput('');
+                  setInputError('');
+                }}
+                className="px-2 py-2 text-gray-600 hover:text-gray-800 text-sm"
+              >
+                ✕
+              </button>
+            </form>
+            {inputError && (
+              <p className="text-xs text-red-600 mt-1 ml-1">{inputError}</p>
+            )}
+          </div>
         )}
 
         {/* Next Button */}

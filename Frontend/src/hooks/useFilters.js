@@ -1,15 +1,17 @@
 // src/hooks/useFilters.js
 
 import { useState } from 'react';
-import { DEFAULT_FILTER_STATE } from '../utils/constants';
 
 export const useFilters = () => {
-  const [selectedRegion, setSelectedRegion] = useState(DEFAULT_FILTER_STATE.region);
-  const [selectedGender, setSelectedGender] = useState(DEFAULT_FILTER_STATE.gender);
-  const [selectedAgeRange, setSelectedAgeRange] = useState(DEFAULT_FILTER_STATE.ageRange);
-  const [selectedCategory, setSelectedCategory] = useState(DEFAULT_FILTER_STATE.category);
-  const [selectedPayment, setSelectedPayment] = useState(DEFAULT_FILTER_STATE.payment);
-  const [selectedDateRange, setSelectedDateRange] = useState(DEFAULT_FILTER_STATE.dateRange);
+  // Multi-select filters (arrays)
+  const [selectedRegion, setSelectedRegion] = useState([]);
+  const [selectedGender, setSelectedGender] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState([]);
+  const [selectedPayment, setSelectedPayment] = useState([]);
+  
+  // Single-select filters (strings) - keep as before
+  const [selectedAgeRange, setSelectedAgeRange] = useState('All');
+  const [selectedDateRange, setSelectedDateRange] = useState('All');
 
   const filters = {
     region: selectedRegion,
@@ -30,12 +32,12 @@ export const useFilters = () => {
   };
 
   const resetFilters = () => {
-    setSelectedRegion(DEFAULT_FILTER_STATE.region);
-    setSelectedGender(DEFAULT_FILTER_STATE.gender);
-    setSelectedAgeRange(DEFAULT_FILTER_STATE.ageRange);
-    setSelectedCategory(DEFAULT_FILTER_STATE.category);
-    setSelectedPayment(DEFAULT_FILTER_STATE.payment);
-    setSelectedDateRange(DEFAULT_FILTER_STATE.dateRange);
+    setSelectedRegion([]);
+    setSelectedGender([]);
+    setSelectedAgeRange('All');
+    setSelectedCategory([]);
+    setSelectedPayment([]);
+    setSelectedDateRange('All');
   };
 
   return { filters, setters, resetFilters };

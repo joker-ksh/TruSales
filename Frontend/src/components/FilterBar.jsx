@@ -29,6 +29,7 @@ export const FilterBar = ({
           />
         </button>
 
+        {/* Multi-select: Region */}
         <Dropdown
           id="region"
           label="Customer Region"
@@ -37,8 +38,10 @@ export const FilterBar = ({
           onSelect={setters.setSelectedRegion}
           activeDropdown={activeDropdown}
           setActiveDropdown={setActiveDropdown}
+          multiSelect={true}
         />
         
+        {/* Multi-select: Gender */}
         <Dropdown
           id="gender"
           label="Gender"
@@ -47,8 +50,10 @@ export const FilterBar = ({
           onSelect={setters.setSelectedGender}
           activeDropdown={activeDropdown}
           setActiveDropdown={setActiveDropdown}
+          multiSelect={true}
         />
         
+        {/* Single-select: Age Range */}
         <Dropdown
           id="age"
           label="Age Range"
@@ -57,8 +62,10 @@ export const FilterBar = ({
           onSelect={setters.setSelectedAgeRange}
           activeDropdown={activeDropdown}
           setActiveDropdown={setActiveDropdown}
+          multiSelect={false}
         />
         
+        {/* Multi-select: Category */}
         <Dropdown
           id="category"
           label="Product Category"
@@ -67,8 +74,10 @@ export const FilterBar = ({
           onSelect={setters.setSelectedCategory}
           activeDropdown={activeDropdown}
           setActiveDropdown={setActiveDropdown}
+          multiSelect={true}
         />
         
+        {/* Multi-select: Payment */}
         <Dropdown
           id="payment"
           label="Payment Method"
@@ -77,8 +86,10 @@ export const FilterBar = ({
           onSelect={setters.setSelectedPayment}
           activeDropdown={activeDropdown}
           setActiveDropdown={setActiveDropdown}
+          multiSelect={true}
         />
         
+        {/* Single-select: Date */}
         <Dropdown
           id="date"
           label="Date"
@@ -87,6 +98,7 @@ export const FilterBar = ({
           onSelect={setters.setSelectedDateRange}
           activeDropdown={activeDropdown}
           setActiveDropdown={setActiveDropdown}
+          multiSelect={false}
         />
       </div>
 

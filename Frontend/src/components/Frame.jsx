@@ -13,7 +13,7 @@ export const Frame = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [activeDropdown, setActiveDropdown] = useState(null);
-  const [sortBy, setSortBy] = useState(''); // No default sort
+  const [sortBy, setSortBy] = useState('');
   
   // API data states
   const [apiData, setApiData] = useState([]);
@@ -36,8 +36,8 @@ export const Frame = () => {
         
         if (sortBy) {
           const [field, order] = sortBy.split('-');
-          sortField = field; // 'name', 'date', or 'quantity'
-          sortOrder = order; // 'asc' or 'desc'
+          sortField = field;
+          sortOrder = order;
         }
         
         const response = await fetchSalesData({
@@ -62,7 +62,17 @@ export const Frame = () => {
     };
 
     fetchData();
-  }, [searchQuery, currentPage, sortBy, filters.region, filters.gender, filters.ageRange, filters.category, filters.payment, filters.dateRange]);
+  }, [
+    searchQuery, 
+    currentPage, 
+    sortBy, 
+    filters.region.length,
+    filters.gender.length,
+    filters.ageRange,
+    filters.category.length,
+    filters.payment.length,
+    filters.dateRange
+  ]);
 
   // No client-side filtering - backend handles everything
   const displayedTransactions = useMemo(() => {
@@ -73,7 +83,7 @@ export const Frame = () => {
     resetFilters();
     setSearchQuery('');
     setCurrentPage(1);
-    setSortBy(''); // Reset sort too
+    setSortBy('');
   };
 
   const handlePageChange = (page) => {
@@ -83,7 +93,7 @@ export const Frame = () => {
 
   const handleSearchChange = (query) => {
     setSearchQuery(query);
-    setCurrentPage(1); // Reset to page 1 when searching
+    setCurrentPage(1);
   };
 
   return (
@@ -102,7 +112,6 @@ export const Frame = () => {
 
       <StatsSection transactions={displayedTransactions} />
 
-      {/* Loading State */}
       {isLoading && (
         <div className="flex-1 flex items-center justify-center py-12 bg-gray-50">
           <div className="text-center">
@@ -112,7 +121,6 @@ export const Frame = () => {
         </div>
       )}
 
-      {/* Error State */}
       {error && !isLoading && (
         <div className="flex-1 flex items-center justify-center py-12 bg-gray-50">
           <div className="text-center px-4">
@@ -128,7 +136,6 @@ export const Frame = () => {
         </div>
       )}
 
-      {/* Table */}
       {!isLoading && !error && (
         <TransactionTable transactions={displayedTransactions} />
       )}

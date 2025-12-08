@@ -28,20 +28,27 @@ export const fetchSalesData = async ({
     if (sort) params.append('sort', sort);
     if (order) params.append('order', order);
     
-    // Add filter parameters
-    if (filters.region && filters.region !== 'All') {
-      params.append('region', filters.region);
+    // Multi-select filters - send as comma-separated strings
+    if (filters.region && Array.isArray(filters.region) && filters.region.length > 0) {
+      params.append('region', filters.region.join(','));
     }
-    if (filters.gender && filters.gender !== 'All') {
-      params.append('gender', filters.gender);
+    if (filters.gender && Array.isArray(filters.gender) && filters.gender.length > 0) {
+      params.append('gender', filters.gender.join(','));
     }
-    if (filters.category && filters.category !== 'All') {
-      params.append('category', filters.category);
+    if (filters.category && Array.isArray(filters.category) && filters.category.length > 0) {
+      params.append('category', filters.category.join(','));
     }
-    if (filters.payment && filters.payment !== 'All') {
-      params.append('payment', filters.payment);
+    if (filters.payment && Array.isArray(filters.payment) && filters.payment.length > 0) {
+      params.append('payment', filters.payment.join(','));
     }
-    // Note: ageRange and dateRange might need special handling based on your backend
+    
+    // Single-select filters - send as strings
+    if (filters.ageRange && filters.ageRange !== 'All') {
+      params.append('age', filters.ageRange);
+    }
+    if (filters.dateRange && filters.dateRange !== 'All') {
+      params.append('date', filters.dateRange);
+    }
     
     const queryString = params.toString();
     const url = queryString 
